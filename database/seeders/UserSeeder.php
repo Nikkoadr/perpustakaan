@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
-class user_seed extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,7 @@ class user_seed extends Seeder
     public function run(): void
     {
         User::create([
+            'id_role' => '1',
             'email' => 'nikkoadrian02@gmail.com',
             'password' => Hash::make('secret123'),
             'name' => 'Nikko Adrian',
