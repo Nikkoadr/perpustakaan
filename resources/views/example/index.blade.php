@@ -35,7 +35,7 @@
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h3 class="card-title mb-0">Contoh DataTabeles</h3>
                                 <div class="ml-auto">
-                                    <a href="#" class="btn btn-success btn-sm">
+                                    <a href="{{ route('example.create') }}" class="btn btn-success btn-sm">
                                         <i class="fas fa-plus"></i> Tambah
                                     </a>
                                 </div>
@@ -46,33 +46,34 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama</th>
-                                            <th>Jenis Kelamin</th>
-                                            <th>Tanggal Lahir</th>
-                                            <th>Alamat</th>
-                                            <th>Menu</th>
+                                            <th>data_string</th>
+                                            <th>data_int</th>
+                                            <th>data_text</th>
+                                            <th>date</th>
+                                            <th class="text-center">Menu</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Dani Ublung</td>
-                                            <td>Perempuan</td>
-                                            <td>29 Maret 2000</td>
-                                            <td>Cirebon</td>
-                                            <td class="text-center">
-                                                <a href="#" class="btn btn-info btn-sm">
-                                                    <i class="fas fa-eye"></i> Detail
-                                                </a>
-                                                <a href="#" class="btn btn-primary btn-sm">
-                                                    <i class="fas fa-edit"></i> Edit
-                                                </a>
-                                                <a href="#" class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-trash-alt"></i> Delete
-                                                </a>
-                                            </td>
-                                            
-                                        </tr>
+                                        @foreach ($data as $item)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $item->data_string }}</td>
+                                                <td>{{ $item->data_int }}</td>
+                                                <td>{{ $item->data_text }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($item->date)->format('d M Y') }}</td>
+                                                <td class="d-flex justify-content-center">
+                                                    <a href="{{ route('example.show', $item->id) }}" class="btn btn-info btn-sm">
+                                                        <i class="fas fa-eye"></i> Show
+                                                    </a>
+                                                    <a href="{{ route('example.edit', $item->id) }}" class="btn btn-primary btn-sm">
+                                                        <i class="fas fa-edit"></i> Edit
+                                                    </a>
+                                                    <a href="{{ route('example.destroy', $item->id) }}" class="btn btn-danger btn-sm">
+                                                        <i class="fas fa-trash"></i> Hapus
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

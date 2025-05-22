@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ExampleController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -19,13 +20,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin/dashboard', [AdminController::class, 'dashborad']);
-Route::get('/admin/databases/datatables', [AdminController::class, 'datatables']);
-
 Auth::routes([
     'register' => false,
     'reset' => true,
     'verify' => false,
 ]);
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+Route::resource('example', ExampleController::class);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

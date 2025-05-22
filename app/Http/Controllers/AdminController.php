@@ -21,12 +21,8 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function dashborad()
+    public function dashboard()
     {
         return view('admin.dashboard');
-    }
-    public function datatables()
-    {
-        return view('admin.datatables');
     }
 }
