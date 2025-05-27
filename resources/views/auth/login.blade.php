@@ -20,7 +20,7 @@
         <!-- /.login-logo -->
             <div class="card card-outline card-primary">
                 <div class="card-header text-center">
-                <a href="#" class="h1"><b>Nikko </b>Adrian</a>
+                <a href="#" class="h1">Perpustakaan</a>
                 </div>
                 <div class="card-body">
                     <p class="login-box-msg">Silahkan masuk untuk memulai sesi Anda</p>
@@ -60,6 +60,10 @@
                             </div>
                             <!-- /.col -->
                         </div>
+                        <div class="row mt-3">
+                            <div class="col-12 text-center">
+                                <a href="{{ route('register') }}" class="text-center">Belum punya akun? Daftar sekarang</a>
+                            </div>
                     </form>
                 </div>
                 <!-- /.card-body -->

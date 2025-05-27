@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Buku;
+use App\Models\User;
+use App\Models\Peminjaman;
 
 class AdminController extends Controller
 {
@@ -23,6 +26,11 @@ class AdminController extends Controller
      */
     public function dashboard()
     {
-        return view('admin.dashboard');
+
+        $jumlah_buku = Buku::count();
+        $jumlah_anggota = User::where('id_role', '3')->count();
+        $peminjaman_aktif = Peminjaman::where('status', 'dipinjam')->count();
+        $peminjaman_selesai = Peminjaman::where('status', 'dikembalikan')->count();
+        return view('admin.dashboard', compact('jumlah_buku', 'jumlah_anggota', 'peminjaman_aktif', 'peminjaman_selesai'));
     }
 }

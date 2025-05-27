@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ExampleController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Data_bukuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,12 +21,12 @@ Route::get('/', function () {
 });
 
 Auth::routes([
-    'register' => false,
+    'register' => true,
     'reset' => true,
     'verify' => false,
 ]);
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
-Route::resource('example', ExampleController::class);
+Route::resource('/admin/data_buku', Data_bukuController::class);
 
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

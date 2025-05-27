@@ -18,8 +18,12 @@ class RolesSeeder extends Seeder
             'description' => 'Administrator',
         ]);
         Roles::create([
-            'nama' => 'user',
-            'description' => 'User',
+            'nama' => 'Petugas',
+            'description' => 'Petugas Perpustakaan',
+        ]);
+        Roles::create([
+            'nama' => 'anggota',
+            'description' => 'Anggota Perpustakaan',
         ]);
     }
 }
