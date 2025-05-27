@@ -29,14 +29,14 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="/admin/data_buku" class="nav-link {{ request()->is('admin/data_buku*') ? 'active' : '' }}">
+                    <a href="{{ route('data_buku.index') }}" class="nav-link {{ request()->is('admin/data_buku*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-book"></i>
                         <p>Data Buku</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="/admin/kategori" class="nav-link {{ request()->is('admin/kategori*') ? 'active' : '' }}">
+                    <a href="{{ route('kategori.index') }}" class="nav-link {{ request()->is('admin/kategori*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tags"></i>
                         <p>Kategori Buku</p>
                     </a>
@@ -52,13 +52,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="/admin/pengguna/petugas" class="nav-link {{ request()->is('admin/pengguna/petugas') ? 'active' : '' }}">
+                            <a href="{{ route('petugas.index') }}" class="nav-link {{ request()->is('admin/pengguna/petugas') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Petugas</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/admin/pengguna/anggota" class="nav-link {{ request()->is('admin/pengguna/anggota') ? 'active' : '' }}">
+                            <a href="{{ route('anggota.index') }}" class="nav-link {{ request()->is('admin/pengguna/anggota') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Anggota</p>
                             </a>
@@ -67,7 +67,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="/admin/peminjaman" class="nav-link {{ request()->is('admin/peminjaman*') ? 'active' : '' }}">
+                    <a href="{{ route('peminjaman.index') }}" class="nav-link {{ request()->is('admin/peminjaman*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-book-reader"></i>
                         <p>Data Peminjaman</p>
                     </a>
@@ -83,13 +83,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="/admin/laporan/peminjaman" class="nav-link {{ request()->is('admin/laporan/peminjaman') ? 'active' : '' }}">
+                            <a href="{{ route('laporan.peminjaman') }}" class="nav-link {{ request()->is('admin/laporan/peminjaman') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Buku Dipinjam</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/admin/laporan/pengembalian" class="nav-link {{ request()->is('admin/laporan/pengembalian') ? 'active' : '' }}">
+                            <a href="{{ route('laporan.pengembalian') }}" class="nav-link {{ request()->is('admin/laporan/pengembalian') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Buku Dikembalikan</p>
                             </a>
