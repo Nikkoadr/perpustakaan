@@ -19,7 +19,7 @@ return new class extends Migration
             $table->year('tahun_terbit');
             $table->string('gambar_sampul')->nullable();
             $table->integer('stok')->default(0);
-            $table->foreignId('kategori_id')->constrained('kategori')->onDelete('cascade');
+            $table->foreignId('kategori_id')->constrained('kategori');
             $table->timestamps();
         });
     }

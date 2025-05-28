@@ -11,10 +11,20 @@
 <div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
-            <h1>Data Pengguna</h1>
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Data Buku</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Admin</a></li>
+                        <li class="breadcrumb-item">Database</li>
+                        <li class="breadcrumb-item active">Buku</li>
+                    </ol>
+                </div>
+            </div>
         </div>
     </section>
-
     <section class="content">
         <div class="container-fluid">
             <div class="card">
@@ -48,7 +58,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ $user->role->nama ?? '-' }}</td>
+                                    <td>{{ $user->role->nama }}</td>
                                     <td class="text-center">
                                         <a href="{{ route('pengguna.show', $user->id) }}" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>

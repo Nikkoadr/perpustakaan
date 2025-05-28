@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('peminjaman', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('users_id')->constrained('users')->onDelete('cascade'); // hanya untuk anggota
+            $table->foreignId('users_id')->constrained('users'); // hanya untuk anggota
             $table->date('tanggal_pinjam');
             $table->date('tanggal_kembali')->nullable();
             $table->enum('status', ['dipinjam', 'dikembalikan'])->default('dipinjam');

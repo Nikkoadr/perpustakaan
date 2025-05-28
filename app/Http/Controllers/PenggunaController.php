@@ -9,11 +9,24 @@ use App\Models\Roles;
 class PenggunaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
         $pengguna = User::with('role')->get();
+
         return view('admin.pengguna.index', compact('pengguna'));
     }
 
@@ -22,8 +35,8 @@ class PenggunaController extends Controller
      */
     public function create()
     {
-        $pengguna = User::with('role')->get();
-        return view('admin.pengguna.create', compact('pengguna'));
+        $roles = Roles::all();
+        return view('admin.pengguna.create', compact('roles'));
     }
 
     /**
@@ -39,7 +52,9 @@ class PenggunaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $roles = Roles::all();
+        return view('admin.pengguna.show', compact('user', 'roles'));
     }
 
     /**
@@ -76,7 +91,6 @@ class PenggunaController extends Controller
         }
 
         $user->save();
-
         return redirect()->route('pengguna.index')->with('success', 'Pengguna berhasil diperbarui.');
     }
 
@@ -87,7 +101,6 @@ class PenggunaController extends Controller
     {
         $pengguna = User::findOrFail($id);
         $pengguna->delete();
-
         return redirect()->route('pengguna.index')->with('success', 'Pengguna berhasil dihapus.');
     }
 }
