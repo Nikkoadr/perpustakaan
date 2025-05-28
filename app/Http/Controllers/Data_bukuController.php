@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Buku;
+use App\Models\Kategori;
+use Illuminate\Support\Facades\Storage;
 
 class Data_bukuController extends Controller
 {
@@ -33,7 +35,8 @@ class Data_bukuController extends Controller
      */
     public function create()
     {
-        return view('admin.data_buku.create');
+        $kategori = Kategori::all();
+        return view('admin.data_buku.create', compact('kategori'));
     }
 
     /**
@@ -42,17 +45,24 @@ class Data_bukuController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'kategori_id' => 'required|exists:kategori,id',
             'judul' => 'required|string|max:255',
-            'pengarang' => 'required|string|max:255',
+            'penulis' => 'required|string|max:255',
             'penerbit' => 'required|string|max:255',
             'tahun_terbit' => 'required|integer',
             'gambar_sampul' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'stok' => 'required|integer|min:0',
-            'kategori_id' => 'required|exists:kategoris,id',
         ]);
 
-        Buku::create($request->all());
+        $data = $request->only(['judul', 'penulis', 'penerbit', 'tahun_terbit', 'stok', 'kategori_id']);
 
+        if ($request->hasFile('gambar_sampul')) {
+            $file = $request->file('gambar_sampul');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/sampul', $filename);
+            $data['gambar_sampul'] = $filename;
+        }
+        Buku::create($data);
         return redirect()->route('data_buku.index')->with('success', 'Buku berhasil ditambahkan.');
     }
 
@@ -61,7 +71,6 @@ class Data_bukuController extends Controller
      */
     public function show(string $id)
     {
-        dd('test');
         $buku = Buku::findOrFail($id);
         return view('admin.data_buku.show', compact('buku'));
     }
@@ -72,24 +81,51 @@ class Data_bukuController extends Controller
     public function edit(string $id)
     {
         $buku = Buku::findOrFail($id);
-        return view('admin.data_buku.edit', compact('buku'));
+        $kategori = Kategori::all();
+        return view('admin.data_buku.edit', compact('buku', 'kategori'));
     }
 
     /**
      * Update the specified resource in storage.
      */
+
     public function update(Request $request, string $id)
     {
         $request->validate([
             'judul' => 'required|string|max:255',
-            'pengarang' => 'required|string|max:255',
+            'penulis' => 'required|string|max:255',
             'penerbit' => 'required|string|max:255',
-            'tahun_terbit' => 'required|integer',
-            'kategori_id' => 'required|exists:kategoris,id',
+            'tahun_terbit' => 'required|digits:4|integer|min:1900|max:' . date('Y'),
+            'stok' => 'required|integer|min:0',
+            'kategori_id' => 'required|exists:kategori,id',
+            'gambar_sampul' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $buku = Buku::findOrFail($id);
-        $buku->update($request->all());
+
+        $buku->judul = $request->judul;
+        $buku->penulis = $request->penulis;
+        $buku->penerbit = $request->penerbit;
+        $buku->tahun_terbit = $request->tahun_terbit;
+        $buku->stok = $request->stok;
+        $buku->kategori_id = $request->kategori_id;
+
+        // Jika ada file gambar baru di-upload
+        if ($request->hasFile('gambar_sampul')) {
+            // Hapus gambar lama jika ada
+            if ($buku->gambar_sampul && Storage::exists('public/sampul/' . $buku->gambar_sampul)) {
+                Storage::delete('public/sampul/' . $buku->gambar_sampul);
+            }
+
+            // Simpan gambar baru
+            $file = $request->file('gambar_sampul');
+            $namaFile = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/sampul', $namaFile);
+
+            $buku->gambar_sampul = $namaFile;
+        }
+
+        $buku->save();
 
         return redirect()->route('data_buku.index')->with('success', 'Buku berhasil diperbarui.');
     }
@@ -100,6 +136,12 @@ class Data_bukuController extends Controller
     public function destroy(string $id)
     {
         $buku = Buku::findOrFail($id);
+
+        // Hapus file gambar sampul jika ada
+        if ($buku->gambar_sampul && Storage::exists('public/sampul/' . $buku->gambar_sampul)) {
+            Storage::delete('public/sampul/' . $buku->gambar_sampul);
+        }
+
         $buku->delete();
 
         return redirect()->route('data_buku.index')->with('success', 'Buku berhasil dihapus.');
