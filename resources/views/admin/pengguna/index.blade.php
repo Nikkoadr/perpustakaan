@@ -1,89 +1,80 @@
 @extends('layouts.master')
-@section('title', 'Data Kategori')
+@section('title', 'Data Pengguna')
 @section('link')
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 @endsection
+
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
-            <h1>Data Kategori</h1>
+            <h1>Data Pengguna</h1>
         </div>
     </section>
 
     <section class="content">
         <div class="container-fluid">
-            @if (session('success'))
-                <script>
-                    Swal.fire({
-                        toast: true,
-                        position: 'top-end',
-                        icon: 'success',
-                        title: '{{ session('success') }}',
-                        showConfirmButton: false,
-                        timer: 3000
-                    });
-                </script>
-            @endif
-
             <div class="card">
                 <div class="card-header">
                     <div class="row w-100">
                         <div class="col-md-6 d-flex align-items-center">
-                            <h3 class="card-title mb-0">Daftar Kategori</h3>
+                            <h3 class="card-title mb-0">Daftar Pengguna</h3>
                         </div>
                         <div class="col-md-6 text-right">
-                            <a href="{{ route('kategori.create') }}" class="btn btn-success btn-sm">
-                                <i class="fas fa-plus"></i> Tambah Kategori
+                            <a href="{{ route('pengguna.create') }}" class="btn btn-success btn-sm">
+                                <i class="fas fa-plus"></i> Tambah Pengguna
                             </a>
                         </div>
                     </div>
                 </div>
 
                 <div class="card-body">
-                    <table id="kategoriTable" class="table table-bordered table-striped">
+                    <table id="tabelPengguna" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th width="5%">No</th>
-                                <th>Nama Kategori</th>
-                                <th width="20%" class="text-center">Aksi</th>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($kategori as $item)
+                            @foreach ($pengguna as $user)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->nama }}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->role->nama ?? '-' }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('kategori.edit', $item->id) }}" class="btn btn-sm btn-primary">
+                                        <a href="{{ route('pengguna.show', $user->id) }}" class="btn btn-info btn-sm">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{{ route('pengguna.edit', $user->id) }}" class="btn btn-primary btn-sm">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <form action="{{ route('kategori.destroy', $item->id) }}" method="POST" class="d-inline form-hapus">
+                                        <form action="{{ route('pengguna.destroy', $user->id) }}" method="POST" class="d-inline form-hapus">
                                             @csrf
                                             @method('DELETE')
                                             <button type="button" class="btn btn-danger btn-sm btn-konfirmasi-hapus">
                                                 <i class="fas fa-trash"></i>
                                             </button>
-                                        </form>  
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
-                            @if ($kategori->isEmpty())
-                                <tr>
-                                    <td colspan="3" class="text-center text-muted">Belum ada data kategori.</td>
-                                </tr>
-                            @endif
                         </tbody>
                     </table>
-                </div>
-            </div>
+                </div> <!-- /.card-body -->
+            </div> <!-- /.card -->
         </div>
     </section>
 </div>
 @endsection
+
 @section('scripts')
 <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -99,12 +90,13 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(function () {
-        $("#kategoriTable").DataTable({
+        $("#tabelPengguna").DataTable({
             responsive: true, lengthChange: false, autoWidth: false,
             buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#kategoriTable_wrapper .col-md-6:eq(0)');
+        }).buttons().container().appendTo('#tabelPengguna_wrapper .col-md-6:eq(0)');
     });
 </script>
+
 @if (session('success'))
 <script>
     Swal.fire({
@@ -132,16 +124,14 @@
     });
 </script>
 @endif
+
 <script>
-    // Konfirmasi Hapus
     $(document).on('click', '.btn-konfirmasi-hapus', function (e) {
         e.preventDefault();
-
         let form = $(this).closest("form");
-
         Swal.fire({
             title: 'Apakah Anda yakin?',
-            text: "Data akan dihapus secara permanen!",
+            text: "Data pengguna akan dihapus secara permanen!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
