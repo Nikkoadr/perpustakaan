@@ -27,41 +27,43 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+                    @can('admin')
+                        <li class="nav-item">
+                            <a href="{{ route('data_buku.index') }}" class="nav-link {{ request()->is('admin/data_buku*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-book"></i>
+                                <p>Data Buku</p>
+                            </a>
+                        </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('data_buku.index') }}" class="nav-link {{ request()->is('admin/data_buku*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-book"></i>
-                        <p>Data Buku</p>
-                    </a>
-                </li>
+                        <li class="nav-item">
+                            <a href="{{ route('kategori.index') }}" class="nav-link {{ request()->is('admin/kategori*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-tags"></i>
+                                <p>Kategori Buku</p>
+                            </a>
+                        </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('kategori.index') }}" class="nav-link {{ request()->is('admin/kategori*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-tags"></i>
-                        <p>Kategori Buku</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('pengguna.index') }}" class="nav-link {{ request()->is('admin/pengguna*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>Pengguna</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('peminjaman.index') }}" class="nav-link {{ request()->is('admin/peminjaman*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-book-reader"></i>
-                        <p>Data Peminjaman</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('laporan.index') }}" class="nav-link {{ request()->is('admin/laporan*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-chart-bar"></i>
-                        <p>Laporan</p>
-                    </a>
-                </li>
+                        <li class="nav-item">
+                            <a href="{{ route('pengguna.index') }}" class="nav-link {{ request()->is('admin/pengguna*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>Pengguna</p>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('admin-dan-petugas')
+                    <li class="nav-item">
+                        <a href="{{ route('peminjaman.index') }}" class="nav-link {{ request()->is('admin/peminjaman*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-book-reader"></i>
+                            <p>Data Peminjaman</p>
+                        </a>
+                    </li>
+    
+                    <li class="nav-item">
+                        <a href="{{ route('laporan.index') }}" class="nav-link {{ request()->is('admin/laporan*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-chart-bar"></i>
+                            <p>Laporan</p>
+                        </a>
+                    </li>
+                    @endcan
 
             </ul>
         </nav>

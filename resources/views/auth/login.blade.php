@@ -60,10 +60,6 @@
                             </div>
                             <!-- /.col -->
                         </div>
-                        <div class="row mt-3">
-                            <div class="col-12 text-center">
-                                <a href="{{ route('register') }}" class="text-center">Belum punya akun? Daftar sekarang</a>
-                            </div>
                     </form>
                 </div>
                 <!-- /.card-body -->

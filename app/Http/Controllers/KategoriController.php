@@ -24,6 +24,7 @@ class KategoriController extends Controller
      */
     public function index()
     {
+        $this->authorize('admin');
         $kategori = Kategori::all();
         return view('admin.kategori.index', compact('kategori'));
     }
@@ -33,6 +34,7 @@ class KategoriController extends Controller
      */
     public function create()
     {
+        $this->authorize('admin');
         return view('admin.kategori.create');
     }
 
@@ -41,6 +43,7 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('admin');
         $request->validate([
             'nama' => 'required|string|max:255',
         ]);
@@ -55,6 +58,7 @@ class KategoriController extends Controller
      */
     public function edit(string $id)
     {
+        $this->authorize('admin');
         $kategori = Kategori::findOrFail($id);
         return view('admin.kategori.edit', compact('kategori'));
     }
@@ -64,6 +68,7 @@ class KategoriController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $this->authorize('admin');
         $request->validate([
             'nama' => 'required|string|max:255',
         ]);
@@ -79,6 +84,7 @@ class KategoriController extends Controller
      */
     public function destroy(string $id)
     {
+        $this->authorize('admin');
         $kategori = Kategori::findOrFail($id);
         $kategori->delete();
 

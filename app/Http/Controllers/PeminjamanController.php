@@ -26,6 +26,7 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
+        $this->authorize('admin-dan-petugas');
         $peminjamanAktif = Peminjaman::with(['user', 'buku'])
             ->where('status', 'dipinjam')
             ->get();
@@ -35,6 +36,7 @@ class PeminjamanController extends Controller
 
     public function autocompletePengguna(Request $request)
     {
+        $this->authorize('admin-dan-petugas');
         $term = $request->get('term');
 
         $users = User::where('role_id', 3)
@@ -49,6 +51,7 @@ class PeminjamanController extends Controller
 
     public function autocompleteBuku(Request $request)
     {
+        $this->authorize('admin-dan-petugas');
         $term = $request->get('term');
         $books = Buku::where('judul', 'LIKE', "%$term%")->get();
 
@@ -59,6 +62,7 @@ class PeminjamanController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('admin-dan-petugas');
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
             'buku_id' => 'required|exists:buku,id',
@@ -101,6 +105,7 @@ class PeminjamanController extends Controller
 
     public function kembalikan($id)
     {
+        $this->authorize('admin-dan-petugas');
         $peminjaman = Peminjaman::findOrFail($id);
 
         $peminjaman->status = 'dikembalikan';
@@ -117,6 +122,7 @@ class PeminjamanController extends Controller
 
     public function perpanjang($id)
     {
+        $this->authorize('admin-dan-petugas');
         $peminjaman = Peminjaman::findOrFail($id);
 
         $peminjaman->tanggal_jatuh_tempo = \Carbon\Carbon::parse($peminjaman->tanggal_jatuh_tempo)->addDays(7);

@@ -26,6 +26,7 @@ class LaporanController extends Controller
 
     public function index(Request $request)
     {
+        $this->authorize('admin-dan-petugas');
         $filter = $request->get('filter');
         $query = Peminjaman::with(['user', 'buku']);
 

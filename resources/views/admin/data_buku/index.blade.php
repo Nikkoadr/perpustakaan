@@ -67,7 +67,7 @@
                                                     @if ($item->gambar_sampul)
                                                         <img src="{{ asset('storage/sampul/' . $item->gambar_sampul) }}" width="50" alt="Sampul">
                                                     @else
-                                                        <span class="text-muted">Tidak ada</span>
+                                                    <img src="{{ asset('assets/dist/img/default.png') }}" width="50" alt="Sampul">
                                                     @endif
                                                 </td>
                                                 <td>{{ $item->judul }}</td>

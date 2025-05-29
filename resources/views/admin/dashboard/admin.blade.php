@@ -67,19 +67,6 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-6">
-                    <!-- Pengembalian -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>{{ $peminjaman_selesai }}</h3>
-                            <p>Pengembalian Hari Ini</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-undo-alt"></i>
-                        </div>
-                        <a href="/admin/laporan/pengembalian" class="small-box-footer">Lihat Detail <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
             </div>
 
             <!-- Welcome Box -->

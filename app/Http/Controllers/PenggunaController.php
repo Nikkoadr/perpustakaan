@@ -25,6 +25,7 @@ class PenggunaController extends Controller
      */
     public function index()
     {
+        $this->authorize('admin');
         $pengguna = User::with('role')->get();
 
         return view('admin.pengguna.index', compact('pengguna'));
@@ -35,6 +36,7 @@ class PenggunaController extends Controller
      */
     public function create()
     {
+        $this->authorize('admin');
         $roles = Roles::all();
         return view('admin.pengguna.create', compact('roles'));
     }
@@ -44,7 +46,26 @@ class PenggunaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('admin');
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+            'nomor_hp' => 'nullable|string|max:20',
+            'alamat' => 'nullable|string',
+            'id_role' => 'required|exists:roles,id'
+        ]);
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->nomor_hp = $request->nomor_hp;
+        $user->alamat = $request->alamat;
+        $user->id_role = $request->id_role;
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return redirect()->route('pengguna.index')->with('success', 'Pengguna berhasil ditambahkan.');
     }
 
     /**
@@ -52,6 +73,7 @@ class PenggunaController extends Controller
      */
     public function show(string $id)
     {
+        $this->authorize('admin');
         $user = User::findOrFail($id);
         $roles = Roles::all();
         return view('admin.pengguna.show', compact('user', 'roles'));
@@ -62,6 +84,7 @@ class PenggunaController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('admin');
         $user = User::findOrFail($id);
         $roles = Roles::all();
         return view('admin.pengguna.edit', compact('user', 'roles'));
@@ -69,8 +92,8 @@ class PenggunaController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->authorize('admin');
         $user = User::findOrFail($id);
-
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => "required|email|unique:users,email,$id",
@@ -99,6 +122,7 @@ class PenggunaController extends Controller
      */
     public function destroy(string $id)
     {
+        $this->authorize('admin');
         $pengguna = User::findOrFail($id);
         $pengguna->delete();
         return redirect()->route('pengguna.index')->with('success', 'Pengguna berhasil dihapus.');

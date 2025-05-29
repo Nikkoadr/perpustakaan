@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Data_bukuController;
 use App\Http\Controllers\KategoriController;
@@ -31,7 +31,7 @@ Auth::routes([
     'verify' => false,
 ]);
 
-Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+Route::get('/admin/dashboard', [DashboardController::class, 'dashboard']);
 Route::resource('/admin/data_buku', Data_bukuController::class);
 Route::resource('/admin/kategori', KategoriController::class);
 Route::resource('/admin/pengguna', PenggunaController::class);

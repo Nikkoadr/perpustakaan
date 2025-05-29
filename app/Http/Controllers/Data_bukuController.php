@@ -26,6 +26,7 @@ class Data_bukuController extends Controller
      */
     public function index()
     {
+        $this->authorize('admin');
         $buku = Buku::with('kategori')->get();
         return view('admin.data_buku.index', compact('buku'));
     }
@@ -35,6 +36,7 @@ class Data_bukuController extends Controller
      */
     public function create()
     {
+        $this->authorize('admin');
         $kategori = Kategori::all();
         return view('admin.data_buku.create', compact('kategori'));
     }
@@ -44,6 +46,7 @@ class Data_bukuController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('admin');
         $request->validate([
             'kategori_id' => 'required|exists:kategori,id',
             'judul' => 'required|string|max:255',
@@ -71,6 +74,7 @@ class Data_bukuController extends Controller
      */
     public function show(string $id)
     {
+        $this->authorize('admin');
         $buku = Buku::findOrFail($id);
         return view('admin.data_buku.show', compact('buku'));
     }
@@ -80,6 +84,7 @@ class Data_bukuController extends Controller
      */
     public function edit(string $id)
     {
+        $this->authorize('admin');
         $buku = Buku::findOrFail($id);
         $kategori = Kategori::all();
         return view('admin.data_buku.edit', compact('buku', 'kategori'));
@@ -91,6 +96,7 @@ class Data_bukuController extends Controller
 
     public function update(Request $request, string $id)
     {
+        $this->authorize('admin');
         $request->validate([
             'judul' => 'required|string|max:255',
             'penulis' => 'required|string|max:255',
@@ -135,6 +141,7 @@ class Data_bukuController extends Controller
      */
     public function destroy(string $id)
     {
+        $this->authorize('admin');
         $buku = Buku::findOrFail($id);
 
         // Hapus file gambar sampul jika ada
