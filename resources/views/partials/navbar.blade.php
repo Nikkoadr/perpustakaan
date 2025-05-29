@@ -8,9 +8,6 @@
         <li class="nav-item d-none d-sm-inline-block">
             <a href="/" class="nav-link">Landing Page</a>
         </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Setting</a>
-        </li>
     </ul>
     
     <!-- Right navbar links -->

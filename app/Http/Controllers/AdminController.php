@@ -28,7 +28,7 @@ class AdminController extends Controller
     {
 
         $jumlah_buku = Buku::count();
-        $jumlah_anggota = User::where('id_role', '3')->count();
+        $jumlah_anggota = User::where('role_id', '3')->count();
         $peminjaman_aktif = Peminjaman::where('status', 'dipinjam')->count();
         $peminjaman_selesai = Peminjaman::where('status', 'dikembalikan')->count();
         return view('admin.dashboard', compact('jumlah_buku', 'jumlah_anggota', 'peminjaman_aktif', 'peminjaman_selesai'));

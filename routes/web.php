@@ -26,7 +26,7 @@ Route::get('/', function () {
 });
 
 Auth::routes([
-    'register' => true,
+    'register' => false,
     'reset' => true,
     'verify' => false,
 ]);
@@ -36,5 +36,13 @@ Route::resource('/admin/data_buku', Data_bukuController::class);
 Route::resource('/admin/kategori', KategoriController::class);
 Route::resource('/admin/pengguna', PenggunaController::class);
 Route::get('/admin/peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.index');
-Route::get('/admin/laporan/peminjaman', [LaporanController::class, 'peminjaman'])->name('laporan.peminjaman');
-Route::get('/admin/laporan/pengembalian', [LaporanController::class, 'pengembalian'])->name('laporan.pengembalian');
+Route::post('/admin/peminjaman', [PeminjamanController::class, 'store'])->name('peminjaman.store');
+
+Route::get('/autocomplete/pengguna', [PeminjamanController::class, 'autocompletePengguna']);
+Route::get('/autocomplete/buku', [PeminjamanController::class, 'autocompleteBuku']);
+
+Route::put('/peminjaman/{id}/kembalikan', [PeminjamanController::class, 'kembalikan'])->name('peminjaman.kembalikan');
+Route::get('/peminjaman/{id}/perpanjang', [PeminjamanController::class, 'perpanjang'])->name('peminjaman.perpanjang');
+
+Route::get('/admin/laporan/harian', [LaporanController::class, 'index'])->name('laporan.index');
+Route::get('/admin/laporan/bulanan', [LaporanController::class, 'bulanan'])->name('laporan.bulanan');

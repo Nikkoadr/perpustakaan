@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Peminjaman;
 
 class LaporanController extends Controller
 {
@@ -21,4 +22,23 @@ class LaporanController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+
+
+    public function index(Request $request)
+    {
+        $filter = $request->get('filter');
+        $query = Peminjaman::with(['user', 'buku']);
+
+        if ($filter === 'harian' && $request->tanggal) {
+            $query->whereDate('tanggal_pinjam', $request->tanggal);
+        } elseif ($filter === 'bulanan' && $request->bulan) {
+            $bulan = explode('-', $request->bulan);
+            $query->whereMonth('tanggal_pinjam', $bulan[1])
+                ->whereYear('tanggal_pinjam', $bulan[0]);
+        }
+
+        $laporan = $query->orderBy('tanggal_pinjam', 'desc')->get();
+
+        return view('admin.laporan.index', compact('laporan'));
+    }
 }

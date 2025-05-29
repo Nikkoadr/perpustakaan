@@ -56,28 +56,11 @@
                     </a>
                 </li>
 
-                <li class="nav-item {{ request()->is('admin/laporan*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->is('admin/laporan*') ? 'active' : '' }}">
+                <li class="nav-item">
+                    <a href="{{ route('laporan.index') }}" class="nav-link {{ request()->is('admin/laporan*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-chart-bar"></i>
-                        <p>
-                            Laporan
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
+                        <p>Laporan</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('laporan.peminjaman') }}" class="nav-link {{ request()->is('admin/laporan/peminjaman') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Buku Dipinjam</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('laporan.pengembalian') }}" class="nav-link {{ request()->is('admin/laporan/pengembalian') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Buku Dikembalikan</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
 
             </ul>

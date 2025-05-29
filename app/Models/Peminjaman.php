@@ -11,6 +11,7 @@ class Peminjaman extends Model
 
     protected $fillable = [
         'user_id',
+        'buku_id',
         'tanggal_pinjam',
         'tanggal_kembali',
         'status'
@@ -21,8 +22,8 @@ class Peminjaman extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function detailPeminjaman()
+    public function buku()
     {
-        return $this->hasMany(DetailPeminjaman::class);
+        return $this->belongsTo(Buku::class);
     }
 }
