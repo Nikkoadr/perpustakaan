@@ -45,15 +45,15 @@
         
                         <div class="form-group">
                             <label>Role</label>
-                            <select name="id_role" class="form-control @error('id_role') is-invalid @enderror" required>
+                            <select name="role_id" class="form-control @error('role_id') is-invalid @enderror" required>
                                 <option value="">-- Pilih Role --</option>
                                 @foreach ($roles as $role)
-                                <option value="{{ $role->id }}" {{ old('id_role') == $role->id ? 'selected' : '' }}>
+                                <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>
                                     {{ $role->nama }}
                                 </option>
                                 @endforeach
                             </select>
-                            @error('id_role')
+                            @error('role_id')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

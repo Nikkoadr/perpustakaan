@@ -53,7 +53,7 @@ class PenggunaController extends Controller
             'password' => 'required|string|min:6|confirmed',
             'nomor_hp' => 'nullable|string|max:20',
             'alamat' => 'nullable|string',
-            'id_role' => 'required|exists:roles,id'
+            'role_id' => 'required|exists:roles,id'
         ]);
 
         $user = new User();
@@ -61,7 +61,7 @@ class PenggunaController extends Controller
         $user->email = $request->email;
         $user->nomor_hp = $request->nomor_hp;
         $user->alamat = $request->alamat;
-        $user->id_role = $request->id_role;
+        $user->role_id = $request->role_id;
         $user->password = bcrypt($request->password);
         $user->save();
 
@@ -100,14 +100,14 @@ class PenggunaController extends Controller
             'password' => 'nullable|string|min:6|confirmed',
             'nomor_hp' => 'nullable|string|max:20',
             'alamat' => 'nullable|string',
-            'id_role' => 'required|exists:roles,id'
+            'role_id' => 'required|exists:roles,id'
         ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
         $user->nomor_hp = $request->nomor_hp;
         $user->alamat = $request->alamat;
-        $user->id_role = $request->id_role;
+        $user->role_id = $request->role_id;
 
         if ($request->filled('password')) {
             $user->password = bcrypt($request->password);

@@ -18,7 +18,6 @@ class BukuSeeder extends Seeder
             'penulis' => 'Nikko Adrian',
             'penerbit' => 'Gramedia',
             'tahun_terbit' => 2021,
-            'gambar_sampul' => 'default.png',
             'stok' => 10,
             'kategori_id' => 1,
         ]);

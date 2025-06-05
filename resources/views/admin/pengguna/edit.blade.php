@@ -82,16 +82,16 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="id_role">Role</label>
-                            <select name="id_role" class="form-control @error('id_role') is-invalid @enderror" required>
+                            <label for="role_id">Role</label>
+                            <select name="role_id" class="form-control @error('role_id') is-invalid @enderror" required>
                                 <option value="">-- Pilih Role --</option>
                                 @foreach ($roles as $role)
-                                    <option value="{{ $role->id }}" {{ old('id_role', $user->id_role) == $role->id ? 'selected' : '' }}>
+                                    <option value="{{ $role->id }}" {{ old('role_id', $user->role_id) == $role->id ? 'selected' : '' }}>
                                         {{ $role->nama }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('id_role')
+                            @error('role_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
