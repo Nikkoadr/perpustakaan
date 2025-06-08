@@ -50,7 +50,7 @@
                         <li class="nav-item">
                             <a href="{{ route('pengguna.index') }}" class="nav-link {{ request()->is('admin/pengguna*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-users"></i>
-                                <p>Pengguna</p>
+                                <p>Anggota</p>
                             </a>
                         </li>
                     @endcan
