@@ -10,12 +10,17 @@
         <!-- User Panel -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+                @if (Auth::user()->foto && file_exists(public_path('storage/foto/' . Auth::user()->foto)))
+                    <img src="{{ asset('storage/foto/' . Auth::user()->foto) }}" class="img-circle elevation-2" alt="User Image">
+                @else
+                    <img src="{{ asset('assets/dist/img/avatar.png') }}" class="img-circle elevation-2" alt="Default User Image">
+                @endif
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="/admin/profile" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
+        
 
         <!-- Menu Sidebar -->
         <nav class="mt-2">

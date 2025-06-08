@@ -8,6 +8,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\ProfileController;
 
 
 /*
@@ -46,3 +47,5 @@ Route::get('/peminjaman/{id}/perpanjang', [PeminjamanController::class, 'perpanj
 
 Route::get('/admin/laporan/harian', [LaporanController::class, 'index'])->name('laporan.index');
 Route::get('/admin/laporan/bulanan', [LaporanController::class, 'bulanan'])->name('laporan.bulanan');
+Route::get('/admin/profile', [ProfileController::class, 'index'])->name('profile.index');
+Route::put('/admin/profile', [ProfileController::class, 'update'])->name('profile.update');
