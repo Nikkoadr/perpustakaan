@@ -37,7 +37,7 @@ pipeline {
       steps {
         sshagent(['my-server-ssh']) {
         sh """
-          ssh -o StrictHostKeyChecking=no root@103.156.16.157 \\
+          ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST \\
           'cd /var/docker/perpustakaan && docker compose pull && docker compose down && docker compose up -d'
         """
         }
