@@ -41,9 +41,9 @@ pipeline {
 
             cd /var/docker/perpustakaan          # pastikan di folder dimana docker-compose.yml berada
 
-            docker-compose pull          # tarik image terbaru
-            docker-compose down          # stop dan hapus container lama
-            docker-compose up -d         # jalankan container baru dengan image update
+            docker compose pull          # tarik image terbaru
+            docker compose down          # stop dan hapus container lama
+            docker compose up -d         # jalankan container baru dengan image update
 
             EOF
           """
