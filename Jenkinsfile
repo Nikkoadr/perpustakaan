@@ -36,17 +36,10 @@ pipeline {
     stage('Deploy to Remote Server') {
       steps {
         sshagent(['my-server-ssh']) {
-          sh """
-            ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST << EOF
-
-            cd /var/docker/perpustakaan          # pastikan di folder dimana docker-compose.yml berada
-
-            docker compose pull          # tarik image terbaru
-            docker compose down          # stop dan hapus container lama
-            docker compose up -d         # jalankan container baru dengan image update
-
-            EOF
-          """
+        sh """
+          ssh -o StrictHostKeyChecking=no root@103.156.16.157 \\
+          'cd /var/docker/perpustakaan && docker compose pull && docker compose down && docker compose up -d'
+        """
         }
       }
     }
