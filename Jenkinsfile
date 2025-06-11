@@ -5,8 +5,13 @@ pipeline {
     IMAGE_NAME = 'nikkoadr/perpustakaan'
     IMAGE_TAG = 'latest'
     CONTAINER_NAME = 'Perpustakaan'
-    REMOTE_USER = 'root'               // ganti sesuai user VPS
-    REMOTE_HOST = '103.156.16.157'    // IP VPS kamu
+    REMOTE_USER = 'root'               // Sesuaikan user VPS
+    REMOTE_HOST = '103.156.16.157'     // IP VPS
+    DEPLOY_PATH = '/var/docker/perpustakaan'  // Direktori di VPS
+  }
+
+  triggers {
+    githubPush() // 🔁 Trigger otomatis saat ada push ke GitHub
   }
 
   stages {
@@ -36,10 +41,14 @@ pipeline {
     stage('Deploy to Remote Server') {
       steps {
         sshagent(['my-server-ssh']) {
-        sh """
-          ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST \\
-          'cd /var/docker/perpustakaan && docker compose pull && docker compose down && docker compose up -d'
-        """
+          sh """
+            ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST '
+              cd $DEPLOY_PATH &&
+              docker compose pull &&
+              docker compose down &&
+              docker compose up -d
+            '
+          """
         }
       }
     }

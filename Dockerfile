@@ -1,36 +1,44 @@
-FROM php:8.2-fpm
+FROM php:8.3-apache
 
-# Install sistem dependencies dan ekstensi PHP yang dibutuhkan
+# Install dependencies sistem dan ekstensi PHP
 RUN apt-get update && apt-get install -y \
     git unzip libzip-dev zip libpng-dev libonig-dev libxml2-dev curl gnupg2 \
     && docker-php-ext-install pdo pdo_mysql zip mbstring exif pcntl bcmath gd
+
+# Aktifkan Apache mod_rewrite
+RUN a2enmod rewrite
 
 # Install Node.js 22.x dan npm
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
     && apt-get install -y nodejs
 
-# Install Composer dari official image
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory aplikasi Laravel
+# Set direktori kerja
 WORKDIR /var/www/html
 
-# Copy file composer dan install dependencies PHP
+# Salin file composer dan install dependencies
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-# Copy seluruh source code Laravel ke container
+# Salin semua file project ke dalam container
 COPY . .
 
-# Install dependencies frontend dan build assets (npm run build)
+# Install frontend dependencies dan build assets
 RUN npm install && npm run build
 
-# Set permission yang tepat untuk folder storage dan bootstrap/cache
+# Set permission folder yang dibutuhkan Laravel
 RUN chown -R www-data:www-data storage bootstrap/cache && \
     chmod -R 775 storage bootstrap/cache
 
-# Expose port 9000 untuk PHP-FPM
-EXPOSE 9000
+# Override default Apache DocumentRoot ke `public`
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf \
+    && sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/apache2.conf
 
-# Jalankan php-fpm (perintah sebenarnya dijalankan di docker-compose.yml)
-CMD ["php-fpm"]
+# Expose port 80 untuk web access
+EXPOSE 80
+
+# Jalankan Apache di foreground
+CMD ["apache2-foreground"]
+
